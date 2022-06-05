@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { ref, onUnmounted } from "vue"
 import { defineStore } from "pinia"
 import { supabase } from "../supabase"
 import { useAuthStore } from "./auth"
@@ -32,13 +32,15 @@ export const useTodosStore = defineStore("todos", () => {
                 user_id: authStore.user?.id,
             })
             if (error) throw error
-            await getTodos()
+            // await getTodos()
         } catch (error) {
             console.error(error.message)
             alert(error.message)
-        } finally {
             loading.value = false
-        }
+        } 
+        // finally {
+        //     loading.value = false
+        // }
     }
 
     async function toggleCompleted({ id, completed }) {
@@ -46,13 +48,15 @@ export const useTodosStore = defineStore("todos", () => {
             loading.value = true
             const { data, error } = await supabase.rpc("toggle_completed", { id, completed })
             if (error) throw error
-            todos.value = data
+            // todos.value = data
         } catch (error) {
             console.error(error.message)
             alert(error.message)
-        } finally {
             loading.value = false
-        }
+        } 
+        // finally {
+        //     loading.value = false
+        // }
     }
 
     async function deleteTodo(id) {
@@ -60,14 +64,24 @@ export const useTodosStore = defineStore("todos", () => {
             loading.value = true
             const { error } = await supabase.from("todos").delete().match({ id })
             if (error) throw error
-            await getTodos()
+            // await getTodos()
         } catch (error) {
             console.error(error.message)
             alert(error.message)
-        } finally {
             loading.value = false
-        }
+        } 
+        // finally {
+        //     loading.value = false
+        // }
     }
+
+    const mySubscription = supabase
+        .from('todos')
+        .on('*', getTodos)
+        .subscribe()
+
+    onUnmounted(() => supabase.removeAllSubscriptions())
+
 
     getTodos()
     return {

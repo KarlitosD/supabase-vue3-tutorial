@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue';
-import { supabase } from '../supabase';
-import { useAuthStore } from '../stores/auth';
-import grayUrl from '../assets/gray.jpg';
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { supabase } from '../supabase'
+import { useAuthStore } from '../stores/auth'
+import grayUrl from '../assets/gray.jpg'
 
 const authStore = useAuthStore()
 const avatarSrc = ref(grayUrl)
@@ -25,7 +26,7 @@ authStore.getProfile().then(getImageProfile)
     <div class="profile-menu">
         <img :src="avatarSrc" class="profile-avatar" @click="toggleOpen">
         <div class="menu" :class="{ hidden: !isOpenMenu }">
-            <RouterLink to="/profile" class="menu-item">Profile</RouterLink>
+            <RouterLink :to="{ name: 'profile' }" class="menu-item">Profile</RouterLink>
             <button class="menu-item" @click="authStore.signOut">Log Out</button>
         </div>
     </div>

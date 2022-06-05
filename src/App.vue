@@ -17,9 +17,9 @@ supabase.auth.onAuthStateChange((_, session) => {
 
 watch(isAuthenticated, newAuthState => {
     if (route.meta.requiresAuth && !newAuthState) 
-        router.push("/login")
+        router.push({ name: "login" })
     if (route.meta.requiresNoAuth && newAuthState)
-        router.push("/")
+        router.push({ name: "root" })
 }, { immediate: true })
 
 </script>

@@ -8,7 +8,7 @@ import logoUrl from "../assets/supabase.png"
 <template>
     <header class="header">
         <div>
-            <RouterLink to="/">
+            <RouterLink :to="{ name: 'root' }">
                 <img :src="logoUrl" alt="Logo de supabase" width="50"/>
             </RouterLink>
         </div>

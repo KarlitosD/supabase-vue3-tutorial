@@ -1,13 +1,9 @@
 <script setup>
 import { ref } from "vue"
 import { useAuthStore } from "../stores/auth"
-import { useRouter } from "vue-router"
 
-const router = useRouter()
 const email = ref("")
 const authStore = useAuthStore()
-
-// if (authStore.isAuthenticated) { router.push("/profile") }
 
 async function handleLogin () {
   await authStore.signIn({ email: email.value })
@@ -31,6 +27,3 @@ async function handleLogin () {
         </div>
     </form>
 </template>
-<!-- <template>
-    <h1>Login</h1>
-</template> -->

@@ -47,7 +47,7 @@ export const useAuthStore = defineStore("auth",{
         async getProfile(){
             try {
                 this.loading = true
-                // Obtener usuario de supabase
+                // get user from supabase
                 this.user = await supabase.auth.user()
                 
                 // Hacer una consulta a la base de datos
